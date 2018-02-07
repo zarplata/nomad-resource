@@ -11,6 +11,4 @@ source $(dirname $0)/common.sh
 
 ref="$(calc_reference)"
 
-jq -n "{
-  \"version\": {\"ref\": \"$ref\"}
-}" >&3
+jq --arg ref "$ref" -n '{version: {ref: $ref}}' >&3

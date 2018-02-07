@@ -12,11 +12,8 @@ source $(dirname $0)/common.sh
 last_ref=$(jq -r '.version.ref // ""' < $payload)
 new_ref="$(calc_reference)"
 
-if [[ "$new_ref" == "$last_refs" ]]
-then
+if [[ "$new_ref" == "$last_refs" ]]; then
   echo "[]" >&3
 else
-  jq -n "[
-    {\"ref\": \"$new_ref\"}
-  ]" >&3
+  jq --arg ref "$new_ref" -n '[{ref: $ref}]' >&3
 fi

@@ -2,18 +2,16 @@ payload=$(mktemp $TMPDIR/script-request.XXXXXX)
 
 cat > $payload <&0
 
-url=$(jq -r '.source.url // ""' < $payload)
+url="$(jq -r '.source.url // ""' < $payload)"
 name="$(jq -r '.source.name // ""' < $payload)"
 
-if [ -z "$url" ]
-then
+if [ -z "$url" ]; then
   echo >&2 "invalid payload (missing url):"
   cat $payload >&2
   exit 1
 fi
 
-if [ -z "$name" ]
-then
+if [ -z "$name" ]; then
   echo >&2 "invalid payload (missing name):"
   cat $payload >&2
   exit 1

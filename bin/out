@@ -15,9 +15,8 @@ job_path="$(jq -r '.params.job_path // ""' < $payload)"
 
 nomad run -address ${url} ${destination}/${job_path}
 
-for run in {1..10}
-do
-  if [ $(calc_status) == "running" ]; then
+for run in {1..10}; do
+  if [ "$(calc_status)" == "running" ]; then
     break;
   fi
   sleep 5
@@ -25,6 +24,4 @@ done
 
 new_ref="$(calc_reference)"
 
-jq -n "{
-  \"version\": {\"ref\": \"$new_ref\"}
-}" >&3
+jq --arg ref "$new_ref" -n '{version: {ref: $ref}}' >&3
