@@ -1,4 +1,4 @@
-# Nomad Resource  
+# Nomad Resource
 
 Concourse resource for deploying Nomad jobs using Concourse.
 
@@ -9,7 +9,7 @@ resource_types:
 - name: nomad
   type: docker-image
   source:
-    repository: aretelabs/nomad-resource
+    repository: zarplata/concourse-nomad-resource
 resources:
 - name: loadbalancer
   type: nomad

@@ -1,0 +1,27 @@
+resources:
+- name: git-master
+  type: git
+  source:
+    uri: https://github.com/zarplata/nomad-resource.git
+    branch: master
+    paths:
+    - bin
+    - Dockerfile
+- name: docker-hub
+  type: docker-image
+  source:
+    repository: zarplata/concourse-nomad-resource
+    username: ((docker-hub.username))
+    password: ((docker-hub.password))
+    tag: latest
+
+jobs:
+- name: release-docker-image
+  public: true
+  serial: true
+  plan:
+  - get: git-master
+    trigger: true
+  - put: docker-hub
+    params:
+      build: git-master
